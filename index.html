@@ -6,76 +6,68 @@
   <title>导航站</title>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
     :root {
-      --bg: #f5f7fa;
-      --card-bg: #ffffff;
-      --text: #1a1a2e;
-      --text-secondary: #555;
-      --accent: #4f6ef7;
-      --accent-light: #e8ecff;
-      --border: #e2e8f0;
-      --radius: 12px;
+      --bg: #f5f7fa; --card-bg: #ffffff; --text: #1a1a2e;
+      --text-secondary: #555; --accent: #4f6ef7; --accent-light: #e8ecff;
+      --border: #e2e8f0; --radius: 12px;
       --shadow: 0 1px 3px rgba(0,0,0,.06), 0 1px 2px rgba(0,0,0,.04);
       --shadow-hover: 0 10px 25px rgba(0,0,0,.08), 0 4px 10px rgba(0,0,0,.04);
     }
-
     body {
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans SC", sans-serif;
-      background: var(--bg);
-      color: var(--text);
-      min-height: 100vh;
+      background: var(--bg); color: var(--text); min-height: 100vh;
     }
-
-    /* Header */
     header {
       background: linear-gradient(135deg, #4f6ef7 0%, #6c5ce7 100%);
-      color: #fff;
-      padding: 48px 24px 36px;
-      text-align: center;
+      color: #fff; padding: 48px 24px 36px; text-align: center;
+      position: relative;
     }
-    header h1 { font-size: 2rem; font-weight: 700; letter-spacing: -0.02em; }
+    header h1 { font-size: 2rem; font-weight: 700; }
     header p  { margin-top: 8px; opacity: .85; font-size: 1rem; }
 
-    /* Search */
+    .header-actions {
+      position: absolute; top: 16px; right: 20px;
+      display: flex; gap: 8px;
+    }
+    .header-actions button {
+      background: rgba(255,255,255,0.15); color: #fff; border: none;
+      padding: 6px 14px; border-radius: 6px; cursor: pointer;
+      font-size: .85rem; transition: background .2s;
+    }
+    .header-actions button:hover { background: rgba(255,255,255,0.3); }
+    .header-actions button.active { background: rgba(255,255,255,0.35); }
+
     .search-wrap {
-      max-width: 640px;
-      margin: -24px auto 32px;
-      padding: 0 16px;
-      position: relative;
-      z-index: 2;
+      max-width: 640px; margin: -24px auto 32px; padding: 0 16px;
+      position: relative; z-index: 2;
     }
     .search-wrap input {
-      width: 100%;
-      padding: 14px 20px;
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      font-size: 1rem;
-      background: var(--card-bg);
-      box-shadow: var(--shadow);
-      outline: none;
+      width: 100%; padding: 14px 20px; border: 1px solid var(--border);
+      border-radius: var(--radius); font-size: 1rem; background: var(--card-bg);
+      box-shadow: var(--shadow); outline: none;
       transition: box-shadow .2s, border-color .2s;
     }
     .search-wrap input:focus {
-      border-color: var(--accent);
-      box-shadow: 0 0 0 3px rgba(79,110,247,.15);
+      border-color: var(--accent); box-shadow: 0 0 0 3px rgba(79,110,247,.15);
     }
 
-    /* Layout */
     .container { max-width: 1200px; margin: 0 auto; padding: 0 16px 64px; }
-
     .categories { display: flex; flex-direction: column; gap: 40px; }
 
-    .category-title {
-      font-size: 1.15rem;
-      font-weight: 600;
-      margin-bottom: 16px;
-      padding-left: 4px;
-      display: flex;
-      align-items: center;
-      gap: 8px;
+    .category-header {
+      display: flex; align-items: center; justify-content: space-between; gap: 8px;
+      margin-bottom: 16px; padding-left: 4px;
     }
-    .category-title .icon { font-size: 1.3rem; }
+    .category-title { font-size: 1.15rem; font-weight: 600; display: flex; align-items: center; gap: 8px; }
+    .cat-actions { display: flex; gap: 6px; }
+    .cat-actions button, .item-actions button {
+      background: none; border: 1px solid var(--border); border-radius: 4px;
+      cursor: pointer; padding: 2px 8px; font-size: .8rem; color: var(--text-secondary);
+      transition: all .15s;
+    }
+    .cat-actions button:hover, .item-actions button:hover { border-color: var(--accent); color: var(--accent); }
+    .btn-danger:hover { border-color: #e53e3e !important; color: #e53e3e !important; }
+    .category-label { font-size: .75rem; color: var(--text-secondary); margin: 4px 0 0 4px; }
 
     .grid {
       display: grid;
@@ -83,78 +75,123 @@
       gap: 14px;
     }
 
-    .card {
-      background: var(--card-bg);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 18px 20px;
-      text-decoration: none;
-      color: inherit;
+    .card, .card-edit {
+      background: var(--card-bg); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 18px 20px;
+      text-decoration: none; color: inherit;
       transition: transform .15s, box-shadow .2s, border-color .2s;
       box-shadow: var(--shadow);
-      display: flex;
-      flex-direction: column;
+      display: flex; flex-direction: column;
     }
     .card:hover {
-      transform: translateY(-2px);
-      box-shadow: var(--shadow-hover);
-      border-color: var(--accent);
+      transform: translateY(-2px); box-shadow: var(--shadow-hover);
     }
+    .card-edit {
+      cursor: default;
+    }
+    .card-edit .field {
+      margin-bottom: 8px;
+    }
+    .card-edit label { font-size: .75rem; color: var(--text-secondary); display: block; margin-bottom: 2px; }
+    .card-edit input {
+      width: 100%; padding: 5px 8px; border: 1px solid var(--border);
+      border-radius: 4px; font-size: .87rem; outline: none;
+      transition: border-color .2s;
+    }
+    .card-edit input:focus { border-color: var(--accent); }
+    .item-actions { display: flex; gap: 6px; margin-top: 4px; justify-content: flex-end; }
 
-    .card-title {
-      font-weight: 600;
-      font-size: 1rem;
-      margin-bottom: 4px;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
+    .card-title { font-weight: 600; font-size: 1rem; margin-bottom: 4px; display: flex; align-items: center; gap: 8px; }
     .card-title .emoji { font-size: 1.15rem; }
-    .card-desc {
-      font-size: .87rem;
-      color: var(--text-secondary);
-      line-height: 1.5;
-    }
+    .card-desc { font-size: .87rem; color: var(--text-secondary); line-height: 1.5; }
     .card-tag {
-      display: inline-block;
-      margin-top: 8px;
-      font-size: .75rem;
-      padding: 2px 8px;
-      border-radius: 4px;
-      background: var(--accent-light);
-      color: var(--accent);
-      align-self: flex-start;
+      display: inline-block; margin-top: 8px; font-size: .75rem;
+      padding: 2px 8px; border-radius: 4px; background: var(--accent-light);
+      color: var(--accent); align-self: flex-start;
     }
 
-    /* Footer */
+    /* 添加分类/卡片按钮 */
+    .add-cat-btn, .add-item-btn {
+      width: 100%; padding: 12px; border: 2px dashed var(--border);
+      border-radius: var(--radius); background: transparent; cursor: pointer;
+      color: var(--text-secondary); font-size: .9rem; transition: all .2s;
+    }
+    .add-cat-btn:hover, .add-item-btn:hover {
+      border-color: var(--accent); color: var(--accent); background: var(--accent-light);
+    }
+
     footer {
-      text-align: center;
-      padding: 24px 16px;
-      color: var(--text-secondary);
-      font-size: .85rem;
-      border-top: 1px solid var(--border);
-      margin-top: 16px;
+      text-align: center; padding: 24px 16px; color: var(--text-secondary);
+      font-size: .85rem; border-top: 1px solid var(--border); margin-top: 16px;
     }
 
-    /* Empty state */
-    .no-results {
-      text-align: center;
-      padding: 48px 16px;
-      color: var(--text-secondary);
+    /* Modal */
+    .modal-overlay {
+      position: fixed; inset: 0; background: rgba(0,0,0,0.5);
+      display: flex; align-items: center; justify-content: center;
+      z-index: 1000;
     }
+    .modal-overlay.hidden { display: none; }
+    .modal {
+      background: #fff; border-radius: var(--radius); padding: 28px 32px;
+      max-width: 400px; width: 90%; box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+    }
+    .modal h3 { margin-bottom: 16px; }
+    .modal input {
+      width: 100%; padding: 10px 14px; border: 1px solid var(--border);
+      border-radius: 6px; font-size: 1rem; margin-bottom: 12px; outline: none;
+    }
+    .modal input:focus { border-color: var(--accent); }
+    .modal .btn-row { display: flex; gap: 8px; justify-content: flex-end; }
+    .modal .btn-row button {
+      padding: 8px 18px; border-radius: 6px; border: none; cursor: pointer; font-size: .9rem;
+    }
+    .modal .btn-primary { background: var(--accent); color: #fff; }
+    .modal .btn-primary:hover { opacity: .9; }
+    .modal .btn-secondary { background: #f0f0f0; color: var(--text); }
+    .modal .btn-secondary:hover { background: #e0e0e0; }
+
+    .toast {
+      position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%);
+      background: #1a1a2e; color: #fff; padding: 10px 20px; border-radius: 8px;
+      font-size: .87rem; z-index: 2000; transition: opacity .3s;
+      opacity: 0; pointer-events: none;
+    }
+    .toast.show { opacity: 1; }
+    .toast.error { background: #c53030; }
+    .toast.success { background: #276749; }
+
+    .no-results { text-align: center; padding: 48px 16px; color: var(--text-secondary); }
     .no-results.hidden { display: none; }
 
     @media (max-width: 640px) {
       header { padding: 36px 16px 28px; }
       header h1 { font-size: 1.5rem; }
       .grid { grid-template-columns: 1fr; }
+      .header-actions { position: static; margin-top: 12px; justify-content: center; }
     }
   </style>
 </head>
 <body>
+  <!-- 密码弹窗 -->
+  <div class="modal-overlay hidden" id="passwordModal">
+    <div class="modal">
+      <h3>🔒 输入编辑密码</h3>
+      <input type="password" id="passwordInput" placeholder="输入密码…" onkeydown="if(event.key==='Enter')verifyPassword()" />
+      <div class="btn-row">
+        <button class="btn-secondary" onclick="closePasswordModal()">取消</button>
+        <button class="btn-primary" onclick="verifyPassword()">确认</button>
+      </div>
+    </div>
+  </div>
+
   <header>
     <h1>🧭 导航站</h1>
     <p>学习资源导航 · 全栈 · 出海 · Agent</p>
+    <div class="header-actions">
+      <button id="editModeBtn" onclick="toggleEditMode()">✏️ 编辑模式</button>
+      <button id="syncBtn" style="display:none" onclick="syncToGithub()">☁️ 同步到 GitHub</button>
+    </div>
   </header>
 
   <div class="search-wrap">
@@ -162,68 +199,313 @@
   </div>
 
   <div class="container">
-    <div class="no-results hidden" id="noResults">没有匹配的站点，换个关键词试试？</div>
+    <div class="no-results hidden" id="noResults">没有匹配的站点</div>
     <div class="categories" id="categories"></div>
+    <button class="add-cat-btn hidden" id="addCatBtn" onclick="addCategory()">+ 添加分类</button>
   </div>
 
   <footer>
-    Made with ❤️ · <a href="https://github.com/wahahaorg" target="_blank" rel="noopener" style="color:var(--accent);text-decoration:none;">GitHub</a>
+    Made with ❤️ · 编辑后数据保存在浏览器本地 · 点击「同步到 GitHub」提交到仓库
   </footer>
 
+  <div class="toast" id="toast"></div>
+
   <script>
-    // ─── 数据 ────────────────────────────────────────────
-    const CATEGORIES = [
-      {
-        name: '📚 学习资料',
-        items: [
-          { title: '全栈知识站', desc: 'Python · Go · Node.js · NestJS 全栈学习路径', tag: 'VitePress', url: 'https://wahahaorg.github.io/fullstack-road/' },
-          { title: '出海游戏站', desc: '海外 SEO 游戏站从 0 到 1 搭建教程', tag: 'VitePress', url: 'https://wahahaorg.github.io/game-size/' },
-          { title: 'Agent 开发', desc: 'LangChain · LangGraph · DeepAgents 学习笔记', tag: 'VitePress', url: 'https://wahahaorg.github.io/learn-fastgpt/' },
-        ]
+    // ===================== 状态 =====================
+    const CONFIG_KEY = 'nav_station_data';
+    const PASSWORD_KEY = 'nav_station_password';
+    const DEFAULT_PASSWORD = '123456';
+
+    let CATEGORIES = [];
+    let isEditMode = false;
+    let isPasswordVerified = false;
+
+    // ===================== 密码 =====================
+    function openPasswordModal() {
+      document.getElementById('passwordModal').classList.remove('hidden');
+      document.getElementById('passwordInput').value = '';
+      document.getElementById('passwordInput').focus();
+    }
+    function closePasswordModal() {
+      document.getElementById('passwordModal').classList.add('hidden');
+    }
+    function setPassword(pwd) {
+      localStorage.setItem(PASSWORD_KEY, pwd);
+    }
+    function verifyPassword() {
+      const input = document.getElementById('passwordInput').value;
+      const saved = localStorage.getItem(PASSWORD_KEY) || DEFAULT_PASSWORD;
+      if (input === saved) {
+        isPasswordVerified = true;
+        closePasswordModal();
+        enableEditMode();
+        toast('✅ 编辑模式已开启', 'success');
+      } else {
+        toast('❌ 密码错误', 'error');
       }
-    ];
+    }
 
-    // ─── 渲染 ────────────────────────────────────────────
-    const container = document.getElementById('categories');
-    const searchInput = document.getElementById('search');
-    const noResults = document.getElementById('noResults');
+    // ===================== 数据加载/保存 =====================
+    function saveToLocal() {
+      localStorage.setItem(CONFIG_KEY, JSON.stringify({ categories: CATEGORIES }));
+    }
 
-    function render(filter = '') {
-      const q = filter.toLowerCase().trim();
+    async function loadData() {
+      // 优先读取本地数据
+      const local = localStorage.getItem(CONFIG_KEY);
+      if (local) {
+        try {
+          CATEGORIES = JSON.parse(local).categories || [];
+          render();
+          return;
+        } catch(e) {}
+      }
+      // 本地没有就从 nav.json 加载
+      try {
+        const resp = await fetch('data/nav.json?_=' + Date.now());
+        const json = await resp.json();
+        CATEGORIES = json.categories || [];
+        saveToLocal();
+      } catch (e) {
+        CATEGORIES = [{ name: '📚 示例', items: [{ title: '全栈知识站', desc: 'Python · Go · Node.js · NestJS', tag: 'VitePress', url: '#' }] }];
+      }
+      render();
+    }
+
+    // ===================== 渲染 =====================
+    function render() {
+      const q = (document.getElementById('search').value || '').toLowerCase().trim();
       let hasAny = false;
       let html = '';
 
-      for (const cat of CATEGORIES) {
-        const filtered = cat.items.filter(item =>
-          !q || item.title.toLowerCase().includes(q) || item.desc.toLowerCase().includes(q)
+      for (let ci = 0; ci < CATEGORIES.length; ci++) {
+        const cat = CATEGORIES[ci];
+        const items = cat.items || [];
+        const filtered = isEditMode ? items : items.filter(item =>
+          !q || (item.title || '').toLowerCase().includes(q) || (item.desc || '').toLowerCase().includes(q)
         );
-        if (filtered.length === 0) continue;
-        hasAny = true;
 
-        html += `<div class="category">
-          <div class="category-title"><span class="icon">${cat.name}</span></div>
-          <div class="grid">`;
+        html += `<div class="category">`;
+        html += `<div class="category-header">`;
+        html += `<div class="category-title">${cat.name || '📂 未命名'}</div>`;
+        if (isEditMode) {
+          html += `<div class="cat-actions">
+            <button onclick="editCategory(${ci})">✏️ 改名</button>
+            <button class="btn-danger" onclick="deleteCategory(${ci})">🗑️ 删除</button>
+          </div>`;
+        }
+        html += `</div>`;
+        html += `<div class="grid">`;
 
-        for (const item of filtered) {
-          const url = item.url === '/' ? window.location.origin : item.url;
-          html += `<a href="${url}" class="card" target="${item.url.startsWith('http') ? '_blank' : '_self'}" rel="noopener">
-            <div class="card-title"><span class="emoji">${item.emoji || '🔗'}</span>${item.title}</div>
-            <div class="card-desc">${item.desc}</div>
-            ${item.tag ? `<span class="card-tag">${item.tag}</span>` : ''}
-          </a>`;
+        for (let ii = 0; ii < items.length; ii++) {
+          const item = items[ii];
+          if (isEditMode) {
+            html += `<div class="card-edit">
+              <div class="field"><label>标题</label><input value="${escHtml(item.title||'')}" onchange="editItem(${ci},${ii},'title',this.value)" /></div>
+              <div class="field"><label>描述</label><input value="${escHtml(item.desc||'')}" onchange="editItem(${ci},${ii},'desc',this.value)" /></div>
+              <div class="field"><label>链接</label><input value="${escHtml(item.url||'')}" onchange="editItem(${ci},${ii},'url',this.value)" /></div>
+              <div class="field"><label>标签</label><input value="${escHtml(item.tag||'')}" onchange="editItem(${ci},${ii},'tag',this.value)" /></div>
+              <div class="field"><label>Emoji</label><input value="${escHtml(item.emoji||'')}" onchange="editItem(${ci},${ii},'emoji',this.value)" /></div>
+              <div class="item-actions">
+                <button onclick="moveItem(${ci},${ii},-1)" ${ii===0?'disabled':''}>↑ 上移</button>
+                <button onclick="moveItem(${ci},${ii},1)" ${ii===items.length-1?'disabled':''}>↓ 下移</button>
+                <button class="btn-danger" onclick="deleteItem(${ci},${ii})">🗑️ 删除</button>
+              </div>
+            </div>`;
+          } else {
+            hasAny = true;
+            const target = item.url && item.url.startsWith('http') ? '_blank' : '_self';
+            html += `<a href="${item.url||'#'}" class="card" target="${target}" rel="noopener">
+              <div class="card-title"><span class="emoji">${item.emoji || '🔗'}</span>${escHtml(item.title||'')}</div>
+              <div class="card-desc">${escHtml(item.desc||'')}</div>
+              ${item.tag ? `<span class="card-tag">${escHtml(item.tag)}</span>` : ''}
+            </a>`;
+          }
+        }
+
+        if (isEditMode) {
+          html += `<button class="add-item-btn" onclick="addItem(${ci})">+ 添加链接</button>`;
         }
 
         html += `</div></div>`;
       }
 
       container.innerHTML = html;
-      noResults.classList.toggle('hidden', hasAny);
+      document.getElementById('addCatBtn').classList.toggle('hidden', !isEditMode);
+      noResults.classList.toggle('hidden', hasAny || isEditMode);
     }
 
-    searchInput.addEventListener('input', () => render(searchInput.value));
+    function escHtml(s) {
+      if (!s) return '';
+      return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+    }
 
-    // 初始渲染
-    render();
+    // ===================== 编辑操作 =====================
+    function editItem(ci, ii, field, value) {
+      CATEGORIES[ci].items[ii][field] = value;
+      saveToLocal();
+    }
+    function addItem(ci) {
+      CATEGORIES[ci].items.push({ title: '新页面', desc: '描述', url: '#', tag: '' });
+      saveToLocal();
+      render();
+    }
+    function deleteItem(ci, ii) {
+      if (!confirm('确定删除？')) return;
+      CATEGORIES[ci].items.splice(ii, 1);
+      saveToLocal();
+      render();
+    }
+    function moveItem(ci, ii, dir) {
+      const items = CATEGORIES[ci].items;
+      const ni = ii + dir;
+      if (ni < 0 || ni >= items.length) return;
+      [items[ii], items[ni]] = [items[ni], items[ii]];
+      saveToLocal();
+      render();
+    }
+    function addCategory() {
+      const name = prompt('分类名称（如 📚 学习资料）');
+      if (!name) return;
+      CATEGORIES.push({ name, items: [] });
+      saveToLocal();
+      render();
+    }
+    function editCategory(ci) {
+      const name = prompt('新分类名称', CATEGORIES[ci].name);
+      if (!name) return;
+      CATEGORIES[ci].name = name;
+      saveToLocal();
+      render();
+    }
+    function deleteCategory(ci) {
+      if (!confirm(`确定删除分类「${CATEGORIES[ci].name}」及其所有链接？`)) return;
+      CATEGORIES.splice(ci, 1);
+      saveToLocal();
+      render();
+    }
+
+    // ===================== 编辑模式 =====================
+    function toggleEditMode() {
+      const pwd = localStorage.getItem(PASSWORD_KEY) || DEFAULT_PASSWORD;
+      if (!isPasswordVerified) {
+        openPasswordModal();
+        return;
+      }
+      if (isEditMode) {
+        disableEditMode();
+      } else {
+        enableEditMode();
+      }
+    }
+    function enableEditMode() {
+      isEditMode = true;
+      document.getElementById('editModeBtn').textContent = '👁️ 预览模式';
+      document.getElementById('editModeBtn').classList.add('active');
+      document.getElementById('syncBtn').style.display = '';
+      render();
+    }
+    function disableEditMode() {
+      isEditMode = false;
+      document.getElementById('editModeBtn').textContent = '✏️ 编辑模式';
+      document.getElementById('editModeBtn').classList.remove('active');
+      document.getElementById('syncBtn').style.display = 'none';
+      render();
+    }
+
+    // ===================== 同步到 GitHub =====================
+    async function syncToGithub() {
+      const token = localStorage.getItem('github_token');
+      if (!token) {
+        const t = prompt('请输入 GitHub Token（https://github.com/settings/tokens 创建，需要 repo 权限）\n输入一次后保存，下次不用再输：');
+        if (!t) return;
+        localStorage.setItem('github_token', t);
+      }
+
+      const data = { categories: CATEGORIES };
+      const content = btoa(unescape(encodeURIComponent(JSON.stringify(data, null, 2))));
+
+      const repo = 'wahahaorg/fullstack-road';
+      const path = 'doc-guide/guide-site/data/nav.json';
+
+      // 先获取当前文件的 sha
+      try {
+        const getResp = await fetch(`https://api.github.com/repos/${repo}/contents/${path}`, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        const getData = await getResp.json();
+        const sha = getData.sha;
+
+        const putResp = await fetch(`https://api.github.com/repos/${repo}/contents/${path}`, {
+          method: 'PUT',
+          headers: {
+            Authorization: `Bearer ${token}`,
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            message: '🔄 导航站数据更新',
+            content,
+            sha,
+          }),
+        });
+
+        if (putResp.ok) {
+          toast('✅ 已提交到 GitHub，等待部署…（约1-2分钟）', 'success');
+        } else {
+          const err = await putResp.json();
+          toast('❌ 提交失败: ' + (err.message || '未知错误'), 'error');
+        }
+      } catch(e) {
+        toast('❌ 网络错误: ' + e.message, 'error');
+      }
+    }
+
+    // ===================== Toast =====================
+    function toast(msg, type) {
+      const el = document.getElementById('toast');
+      el.textContent = msg;
+      el.className = 'toast show' + (type ? ' ' + type : '');
+      setTimeout(() => el.classList.remove('show'), 3000);
+    }
+
+    // ===================== 搜索 =====================
+    const container = document.getElementById('categories');
+    const noResults = document.getElementById('noResults');
+    document.getElementById('search').addEventListener('input', () => {
+      if (!isEditMode) render();
+    });
+
+    // ===================== 启动 =====================
+    loadData();
+
+    // 如果之前验证过密码，可以直接进入编辑
+    if (localStorage.getItem('nav_edit_verified') === '1') {
+      isPasswordVerified = true;
+    }
+    // 同步验证状态
+    window.verifyPassword = function() {
+      const input = document.getElementById('passwordInput').value;
+      const saved = localStorage.getItem(PASSWORD_KEY) || DEFAULT_PASSWORD;
+      if (input === saved) {
+        isPasswordVerified = true;
+        localStorage.setItem('nav_edit_verified', '1');
+        closePasswordModal();
+        enableEditMode();
+        toast('✅ 编辑模式已开启', 'success');
+      } else {
+        toast('❌ 密码错误', 'error');
+      }
+    };
+    window.closePasswordModal = closePasswordModal;
+    window.toggleEditMode = toggleEditMode;
+    window.syncToGithub = syncToGithub;
+    window.addCategory = addCategory;
+    window.editCategory = editCategory;
+    window.deleteCategory = deleteCategory;
+    window.addItem = addItem;
+    window.deleteItem = deleteItem;
+    window.moveItem = moveItem;
+    window.editItem = editItem;
   </script>
 </body>
 </html>

@@ -1,0 +1,27 @@
+{
+  "categories": [
+    {
+      "name": "📚 学习资料",
+      "items": [
+        {
+          "title": "全栈知识站",
+          "desc": "Python · Go · Node.js · NestJS 全栈学习路径",
+          "tag": "VitePress",
+          "url": "https://wahahaorg.github.io/fullstack-road/"
+        },
+        {
+          "title": "出海游戏站",
+          "desc": "海外 SEO 游戏站从 0 到 1 搭建教程",
+          "tag": "VitePress",
+          "url": "https://wahahaorg.github.io/game-size/"
+        },
+        {
+          "title": "Agent 开发",
+          "desc": "LangChain · LangGraph · DeepAgents 学习笔记",
+          "tag": "VitePress",
+          "url": "https://wahahaorg.github.io/learn-fastgpt/"
+        }
+      ]
+    }
+  ]
+}
