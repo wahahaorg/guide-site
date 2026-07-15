@@ -20,6 +20,41 @@
           "desc": "LangChain · LangGraph · DeepAgents 学习笔记",
           "tag": "VitePress",
           "url": "https://wahahaorg.github.io/learn-fastgpt/"
+        },
+        {
+          "title": "常用项目架构",
+          "desc": "常用的项目架构方式",
+          "url": "https://study8677.github.io/awesome-architecture/",
+          "tag": ""
+        },
+        {
+          "title": "agent教程",
+          "desc": "算是比较全面的agent教程了，用的语言是python",
+          "url": "https://github.com/didilili/ai-agents-from-zero/",
+          "tag": ""
+        }
+      ]
+    },
+    {
+      "name": "AI相关",
+      "items": [
+        {
+          "title": "AI订阅站",
+          "desc": "价格还可以",
+          "url": "https://bewild.ai/subscribe",
+          "tag": ""
+        },
+        {
+          "title": "linuxdo中转站评价平台",
+          "desc": "中转站评价",
+          "url": "https://rate.linux.do/",
+          "tag": ""
+        },
+        {
+          "title": "接码平台",
+          "desc": "gpt封号用的",
+          "url": "https://5sim.net/zh/payment",
+          "tag": ""
         }
       ]
     }
