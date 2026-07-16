@@ -38,6 +38,18 @@
           "desc": "88买了个终身会员，不能浪费",
           "url": "https://keykey.cc/",
           "tag": ""
+        },
+        {
+          "title": "github周榜",
+          "desc": "每天看看发现新项目",
+          "url": "https://github.com/trending?since=weekly",
+          "tag": ""
+        },
+        {
+          "title": "vibe Coding",
+          "desc": "讲怎么用好vibe coding的",
+          "url": "https://www.vibevibe.cn/zh/",
+          "tag": ""
         }
       ]
     },
@@ -66,6 +78,23 @@
           "title": "俄罗斯二手交易网",
           "desc": "买opencode便宜",
           "url": "https://plati.io/seller/logbox/1419697/",
+          "tag": ""
+        }
+      ]
+    },
+    {
+      "name": "招聘",
+      "items": [
+        {
+          "title": "阮一峰的招聘",
+          "desc": "就在github的issue里",
+          "url": "https://github.com/ruanyf/weekly/issues/10147",
+          "tag": ""
+        },
+        {
+          "title": "远程工作合集网站",
+          "desc": "好像是一个聚合招聘的",
+          "url": "https://yuanchengdao.com/",
           "tag": ""
         }
       ]
