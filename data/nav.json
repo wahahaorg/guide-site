@@ -79,6 +79,12 @@
           "desc": "买opencode便宜",
           "url": "https://plati.io/seller/logbox/1419697/",
           "tag": ""
+        },
+        {
+          "title": "多agent实践",
+          "desc": "多agnet交互的一个项目",
+          "url": "https://github.com/Runfusion/Fusion",
+          "tag": ""
         }
       ]
     },
