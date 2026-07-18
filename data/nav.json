@@ -50,6 +50,12 @@
           "desc": "讲怎么用好vibe coding的",
           "url": "https://www.vibevibe.cn/zh/",
           "tag": ""
+        },
+        {
+          "title": "Leagent教程",
+          "desc": "围绕这个项目构建的教程",
+          "url": "https://wahahaorg.github.io/learn-leAgent/04-directory",
+          "tag": ""
         }
       ]
     },
