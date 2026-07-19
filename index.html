@@ -281,9 +281,19 @@
       for (let ci = 0; ci < CATEGORIES.length; ci++) {
         const cat = CATEGORIES[ci];
         const items = cat.items || [];
-        const filtered = isEditMode ? items : items.filter(item =>
-          !q || (item.title || '').toLowerCase().includes(q) || (item.desc || '').toLowerCase().includes(q)
-        );
+        const filtered = isEditMode ? items : items.filter(item => {
+          const searchable = [
+            item.title,
+            item.desc,
+            item.tag,
+            cat.name,
+          ].join(' ').toLowerCase();
+          return !q || searchable.includes(q);
+        });
+
+        if (!isEditMode && q && filtered.length === 0) {
+          continue;
+        }
 
         html += `<div class="category">`;
         html += `<div class="category-header">`;
@@ -297,19 +307,20 @@
         html += `</div>`;
         html += `<div class="grid">`;
 
-        for (let ii = 0; ii < items.length; ii++) {
-          const item = items[ii];
+        for (let ii = 0; ii < filtered.length; ii++) {
+          const item = filtered[ii];
+          const itemIndex = items.indexOf(item);
           if (isEditMode) {
             html += `<div class="card-edit">
-              <div class="field"><label>标题</label><input value="${escHtml(item.title||'')}" onchange="editItem(${ci},${ii},'title',this.value)" /></div>
-              <div class="field"><label>描述</label><input value="${escHtml(item.desc||'')}" onchange="editItem(${ci},${ii},'desc',this.value)" /></div>
-              <div class="field"><label>链接</label><input value="${escHtml(item.url||'')}" onchange="editItem(${ci},${ii},'url',this.value)" /></div>
-              <div class="field"><label>标签</label><input value="${escHtml(item.tag||'')}" onchange="editItem(${ci},${ii},'tag',this.value)" /></div>
-              <div class="field"><label>Emoji</label><input value="${escHtml(item.emoji||'')}" onchange="editItem(${ci},${ii},'emoji',this.value)" /></div>
+              <div class="field"><label>标题</label><input value="${escHtml(item.title||'')}" onchange="editItem(${ci},${itemIndex},'title',this.value)" /></div>
+              <div class="field"><label>描述</label><input value="${escHtml(item.desc||'')}" onchange="editItem(${ci},${itemIndex},'desc',this.value)" /></div>
+              <div class="field"><label>链接</label><input value="${escHtml(item.url||'')}" onchange="editItem(${ci},${itemIndex},'url',this.value)" /></div>
+              <div class="field"><label>标签</label><input value="${escHtml(item.tag||'')}" onchange="editItem(${ci},${itemIndex},'tag',this.value)" /></div>
+              <div class="field"><label>Emoji</label><input value="${escHtml(item.emoji||'')}" onchange="editItem(${ci},${itemIndex},'emoji',this.value)" /></div>
               <div class="item-actions">
-                <button onclick="moveItem(${ci},${ii},-1)" ${ii===0?'disabled':''}>↑ 上移</button>
-                <button onclick="moveItem(${ci},${ii},1)" ${ii===items.length-1?'disabled':''}>↓ 下移</button>
-                <button class="btn-danger" onclick="deleteItem(${ci},${ii})">🗑️ 删除</button>
+                <button onclick="moveItem(${ci},${itemIndex},-1)" ${itemIndex===0?'disabled':''}>↑ 上移</button>
+                <button onclick="moveItem(${ci},${itemIndex},1)" ${itemIndex===items.length-1?'disabled':''}>↓ 下移</button>
+                <button class="btn-danger" onclick="deleteItem(${ci},${itemIndex})">🗑️ 删除</button>
               </div>
             </div>`;
           } else {
