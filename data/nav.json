@@ -32,6 +32,30 @@
           "desc": "算是比较全面的agent教程了，用的语言是python",
           "url": "https://github.com/didilili/ai-agents-from-zero/",
           "tag": ""
+        },
+        {
+          "title": "打字练习英语",
+          "desc": "88买了个终身会员，不能浪费",
+          "url": "https://keykey.cc/",
+          "tag": ""
+        },
+        {
+          "title": "github周榜",
+          "desc": "每天看看发现新项目",
+          "url": "https://github.com/trending?since=weekly",
+          "tag": ""
+        },
+        {
+          "title": "vibe Coding",
+          "desc": "讲怎么用好vibe coding的",
+          "url": "https://www.vibevibe.cn/zh/",
+          "tag": ""
+        },
+        {
+          "title": "Leagent教程",
+          "desc": "围绕这个项目构建的教程",
+          "url": "https://wahahaorg.github.io/learn-leAgent/04-directory",
+          "tag": ""
         }
       ]
     },
@@ -54,6 +78,35 @@
           "title": "接码平台",
           "desc": "gpt封号用的",
           "url": "https://5sim.net/zh/payment",
+          "tag": ""
+        },
+        {
+          "title": "俄罗斯二手交易网",
+          "desc": "买opencode便宜",
+          "url": "https://plati.io/seller/logbox/1419697/",
+          "tag": ""
+        },
+        {
+          "title": "多agent实践",
+          "desc": "多agnet交互的一个项目",
+          "url": "https://github.com/Runfusion/Fusion",
+          "tag": ""
+        }
+      ]
+    },
+    {
+      "name": "招聘",
+      "items": [
+        {
+          "title": "阮一峰的招聘",
+          "desc": "就在github的issue里",
+          "url": "https://github.com/ruanyf/weekly/issues/10147",
+          "tag": ""
+        },
+        {
+          "title": "远程工作合集网站",
+          "desc": "好像是一个聚合招聘的",
+          "url": "https://yuanchengdao.com/",
           "tag": ""
         }
       ]
