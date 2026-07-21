@@ -56,6 +56,30 @@
           "desc": "围绕这个项目构建的教程",
           "url": "https://wahahaorg.github.io/learn-leAgent/04-directory",
           "tag": ""
+        },
+        {
+          "title": "ai agent book",
+          "desc": "说是怒喷deepseek面试那个人写的",
+          "url": "https://github.com/bojieli/ai-agent-book",
+          "tag": ""
+        },
+        {
+          "title": "面向开发者的harness提效指南",
+          "desc": "harness",
+          "url": "https://mlhiter.github.io/#/page/%E9%9D%A2%E5%90%91%E5%BC%80%E5%8F%91%E8%80%85%E7%9A%84ai%20%E6%8F%90%E6%95%88%20harness%E6%8C%87%E5%8D%97",
+          "tag": ""
+        },
+        {
+          "title": "智能体设计指南",
+          "desc": "智能体开发",
+          "url": "https://jimmysong.io/zh/book/agentic-design-patterns/",
+          "tag": ""
+        },
+        {
+          "title": "learn claude code ",
+          "desc": "学习claude code",
+          "url": "https://learn.shareai.run/zh/s01/",
+          "tag": ""
         }
       ]
     },
